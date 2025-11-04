@@ -19,93 +19,124 @@ namespace DocuTrackBST.Controller
 
         public void Run()
         {
-            // 1) Construcción inicial (≥14 inserciones efectivas, archivos son hojas)
-            var inicial = new (string, bool)[] {
-                ("M",true), ("D",true), ("T",true), ("B.txt",false), ("F",true), ("R",true), ("Y",true),
-                ("E.txt",false), ("H",true), ("I.txt",false), ("A.txt",false), ("Q",true), ("W",true), ("Z.txt",false), ("C.txt",false), ("G.txt",false)
-            };
+            ConstruirArbolInicial();
+            RealizarBusquedas();
+            RealizarActualizaciones();
+            RealizarEliminaciones();
+            MostrarRecorridosYAltura();
+        }
+        private void ConstruirArbolInicial()
+        {
+            var datosIniciales = ObtenerDatosIniciales();
             _view.Mensaje("Métricas de inserción:");
-            int efectivas = 0;
-            foreach (var (nombre, esCarpeta) in inicial)
+
+            int insercionesExitosas = 0;
+            foreach (var (nombre, esCarpeta) in datosIniciales)
             {
                 var (insertado, comparaciones, _) = _arbol.Insertar(nombre, esCarpeta, msg => _view.Mensaje(msg));
-                _view.Mensaje($"Insertar {nombre} — comparaciones: {comparaciones}");
-                if (insertado) efectivas++;
+                if (insertado) insercionesExitosas++;
+                _view.Mensaje($"Insertar '{nombre}': {(insertado ? "Éxito" : "Fallo")}, Comparaciones: {comparaciones}");
             }
-            _view.Mensaje($"Total inserciones efectivas: {efectivas}");
+            _view.Mensaje($"Total inserciones exitosas: {insercionesExitosas}\n");
             _view.MostrarArbol(_arbol.Raiz);
+        }
 
-            // 2) Búsquedas distribuidas
-            var busquedasIzq = new[] { "B.txt", "F" };
-            var busquedasDer = new[] { "T", "Y" };
-            var busquedasNo = new[] { "NON1", "NON2" };
-            foreach (var nombre in busquedasIzq)
+        private (string nombre, bool esCarpeta)[] ObtenerDatosIniciales()
+        {
+            return new (string, bool)[] {
+                ("M", true),
+                ("D", true),
+                ("T", true),
+                ("B.txt", false),
+                ("F", true),
+                ("R", true),
+                ("Y", true),
+                ("E.txt", false),
+                ("H", true),
+                ("I.txt", false),
+                ("A.txt", false),
+                ("Q", true),
+                ("W", true),
+                ("Z.txt", false),
+                ("C.txt", false),
+                ("G.txt", false)
+            };
+        }
+
+        private void RealizarBusquedas()
+        {
+            RealizarBusquedasPorTipo("IZQUIERDA", new string[] { "B.txt", "F" });
+            RealizarBusquedasPorTipo("DERECHA", new string[] { "Y", "T" });
+            RealizarBusquedasPorTipo("INEXISTENTE", new[] { "NON1", "NON2" });
+        }
+
+        private void RealizarBusquedasPorTipo(string tipo, string[] nombres)
+        {
+
+            foreach (var nombre in nombres)
             {
-                var (encontrado, comp) = _arbol.Buscar(nombre);
-                _view.Mensaje($"Búsqueda IZQUIERDA:");
-                _view.MostrarComparaciones(nombre, comp, encontrado);
+                var (encontrado, comparaciones) = _arbol.Buscar(nombre);
+                _view.Mensaje($"\nBúsquedas {tipo}:");
+                _view.MostrarComparaciones(nombre, comparaciones, encontrado);
             }
-            foreach (var nombre in busquedasDer)
-            {
-                var (encontrado, comp) = _arbol.Buscar(nombre);
-                _view.Mensaje($"Búsqueda DERECHA:");
-                _view.MostrarComparaciones(nombre, comp, encontrado);
-            }
-            foreach (var nombre in busquedasNo)
-            {
-                var (encontrado, comp) = _arbol.Buscar(nombre);
-                _view.Mensaje($"Búsqueda INEXISTENTE:");
-                _view.MostrarComparaciones(nombre, comp, encontrado);
-            }
+        }
 
-            // 3) Actualizaciones
-            // Hoja: "E.txt" -> "E2.txt"
-            if (_arbol.Actualizar("E.txt", "E2.txt", false, _view.Mensaje))
-                _view.Mensaje("Actualizado: E.txt -> E2.txt");
-            else
-                _view.Mensaje("No se pudo actualizar: E.txt");
-            _view.MostrarArbol(_arbol.Raiz);
+        private void RealizarActualizaciones()
+        {
+            ActualizarNodo("E.txt", "E2.txt", false, "E.txt -> E2.txt");
+            ActualizarNodo("H", "H2025", true, "H -> H2025");
 
-            // Nodo con un hijo: "H" -> "H2025" (asegura que H tenga solo I.txt)
-            if (_arbol.Actualizar("H", "H2025", true, _view.Mensaje))
-                _view.Mensaje("Actualizado: H -> H2025");
-            else
-                _view.Mensaje("No se pudo actualizar: H");
-            _view.MostrarArbol(_arbol.Raiz);
-
-            // Raíz: "M" -> "N" (asegura que la raíz tenga dos hijos)
             var raizActual = _arbol.Raiz?.Nombre ?? "M";
-            if (_arbol.Actualizar(raizActual, "N", true, _view.Mensaje))
-                _view.Mensaje($"Actualizado: {raizActual} -> N");
-            else
-                _view.Mensaje($"No se pudo actualizar: {raizActual}");
-            _view.MostrarArbol(_arbol.Raiz);
+            ActualizarNodo(raizActual, "N", true, $"{raizActual} -> N");
+        }
 
-            // 4) Eliminaciones selectivas
-            // Hoja: "A.txt"
-            if (_arbol.Eliminar("A.txt", _view.Mensaje))
-                _view.Mensaje("Eliminado: A.txt");
+        private void ActualizarNodo(string nombreViejo, string nombreNuevo, bool esCarpeta, string descripcion)
+        {
+            if (_arbol.Actualizar(nombreViejo, nombreNuevo, esCarpeta, _view.Mensaje))
+            {
+                _view.Mensaje($"\nActualización exitosa: {descripcion}");
+            }
             else
-                _view.Mensaje("No se pudo eliminar: A.txt");
+            {
+                _view.Mensaje($"\nActualización fallida: {nombreViejo}");
+            }
             _view.MostrarArbol(_arbol.Raiz);
+        }
 
-            // Un hijo: "Q" (o "H2025" si aplica)
-            if (_arbol.Eliminar("Q", _view.Mensaje))
-                _view.Mensaje("Eliminado: Q");
-            else if (_arbol.Eliminar("H2025", _view.Mensaje))
-                _view.Mensaje("Eliminado: H2025");
+        private void RealizarEliminaciones()
+        {
+            EliminarNodo("A.txt");
+            EliminarNodoConAlternativas("Q", "H2025");
+            EliminarNodo("N");
+        }
+
+        private void EliminarNodo(string nombre)
+        {
+            if (_arbol.Eliminar(nombre, _view.Mensaje))
+            {
+                _view.Mensaje($"\nEliminación exitosa: {nombre}");
+            }
             else
-                _view.Mensaje("No se pudo eliminar: Q ni H2025");
+            {
+                _view.Mensaje($"\nEliminación fallida: {nombre}");
+            }
             _view.MostrarArbol(_arbol.Raiz);
+        }
 
-            // Raíz con dos hijos: "N"
-            if (_arbol.Eliminar("N", _view.Mensaje))
-                _view.Mensaje("Eliminado: N");
+        private void EliminarNodoConAlternativas(string nombrePrimario, string nombreAlternativo)
+        {
+            if (_arbol.Eliminar(nombrePrimario, _view.Mensaje))
+                _view.Mensaje($"Eliminado: {nombrePrimario}");
+            else if (_arbol.Eliminar(nombreAlternativo, _view.Mensaje))
+                _view.Mensaje($"Eliminado: {nombreAlternativo}");
             else
-                _view.Mensaje("No se pudo eliminar: N");
-            _view.MostrarArbol(_arbol.Raiz);
+                _view.Mensaje($"No se pudo eliminar: {nombrePrimario} ni {nombreAlternativo}");
 
-            // 5) Recorridos y altura final
+            _view.MostrarArbol(_arbol.Raiz);
+        }
+        
+     private void MostrarRecorridosYAltura()
+        {
             _view.MostrarRecorrido("Preorden", _arbol.Preorden());
             _view.MostrarRecorrido("Inorden", _arbol.Inorden());
             _view.MostrarRecorrido("Postorden", _arbol.Postorden());

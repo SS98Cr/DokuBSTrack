@@ -12,3 +12,4 @@ E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\refint\DokuBSTrack.dl
 E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.pdb
 E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.genruntimeconfig.cache
 E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\ref\DokuBSTrack.dll
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.sourcelink.json

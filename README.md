@@ -26,6 +26,29 @@ Proyecto de consola en C# (.NET) que implementa un Árbol Binario de Búsqueda (
    dotnet run .
    ```
 
+## Proceso de construcción e impresión
+Al ejecutar el proyecto, se realiza automáticamente:
+
+1. **Construcción del árbol inicial**
+   - Se insertan 14 nodos efectivos (carpetas y archivos) siguiendo la invariante: los archivos son siempre hojas.
+   - Cada inserción muestra el número de comparaciones realizadas.
+   - Se imprime el árbol ASCII tras la construcción.
+
+2. **Búsquedas distribuidas**
+   - Se realizan 6 búsquedas: 2 en el subárbol izquierdo, 2 en el derecho, 2 inexistentes.
+   - Se imprime para cada búsqueda si fue hallada y el número de comparaciones.
+
+3. **Actualizaciones**
+   - Se actualizan nodos (hoja, nodo con un hijo, raíz) usando Eliminar+Insertar.
+   - Tras cada actualización se imprime el árbol.
+
+4. **Eliminaciones**
+   - Se eliminan nodos (hoja, nodo con un hijo, raíz con dos hijos).
+   - Se imprime el árbol y el mensaje del caso ejecutado (hoja, un hijo, dos hijos con sucesor).
+
+5. **Recorridos y altura**
+   - Se muestran los recorridos (preorden, inorden, postorden, por niveles) y la altura final del árbol.
+
 ## Ejemplo de salida
 - Inserciones con métricas
 - Búsquedas distribuidas (izquierdo, derecho, inexistente)

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DokuBSTrack")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52886aca72f76bad2ff799ad61903d305bcea41c")]
 [assembly: System.Reflection.AssemblyProductAttribute("DokuBSTrack")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DokuBSTrack")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
