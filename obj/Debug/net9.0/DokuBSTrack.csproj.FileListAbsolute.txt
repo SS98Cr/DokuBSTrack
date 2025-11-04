@@ -1,0 +1,14 @@
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.GeneratedMSBuildEditorConfig.editorconfig
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.AssemblyInfoInputs.cache
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.AssemblyInfo.cs
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.csproj.CoreCompileInputs.cache
+E:\Proyectos Programacion III\DokuBSTrack\bin\Debug\net9.0\DokuBSTrack.exe
+E:\Proyectos Programacion III\DokuBSTrack\bin\Debug\net9.0\DokuBSTrack.deps.json
+E:\Proyectos Programacion III\DokuBSTrack\bin\Debug\net9.0\DokuBSTrack.runtimeconfig.json
+E:\Proyectos Programacion III\DokuBSTrack\bin\Debug\net9.0\DokuBSTrack.dll
+E:\Proyectos Programacion III\DokuBSTrack\bin\Debug\net9.0\DokuBSTrack.pdb
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.dll
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\refint\DokuBSTrack.dll
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.pdb
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\DokuBSTrack.genruntimeconfig.cache
+E:\Proyectos Programacion III\DokuBSTrack\obj\Debug\net9.0\ref\DokuBSTrack.dll
